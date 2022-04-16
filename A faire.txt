@@ -1,0 +1,24 @@
+-Places de parking 0-19
+-3 types de véhicules
+-7 réducs
+
+-Arrivage de vehicule (tjr au plus petit)
+-commence à 1h, vidé a 23h
+-moto 10, voiture 20, camiopn 30 tjr le même prit pour la journée
+-rrr
+
+-Sortie de client manuelle
+-tickets jeu
+-sytemes de répertoires par jour (DDMMYY)
+-nomenclature de ticket
+-probabilités des tickets
+
+-UI
+-Codes couleurs + plaques dans les places de parking
+-Possibilité de changer vehicule ou liberer place
+
+-Analyse (voir tt ce qu'on a besoin)
+-Affichage temp (console)
+-Places de parking
+-plaques aleatoire
+-Simulation V

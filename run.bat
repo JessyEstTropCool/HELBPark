@@ -11,3 +11,4 @@ if %errorlevel% equ 0 (
 )
 
 del *.class
+pause

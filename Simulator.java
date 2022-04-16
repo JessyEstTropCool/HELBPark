@@ -40,7 +40,8 @@ public class Simulator
                     }
                     else 
                     {
-                        System.out.println("Da end "+totalSecs+" secs");
+                        int seconds = totalSecs % 60, minutes = (totalSecs / 60) % 60;
+                        System.out.println(minutes+"m "+seconds+"s");
                         reader.close();
                         timer.cancel();
                     }
@@ -51,7 +52,11 @@ public class Simulator
                     e.printStackTrace();
                 }
             }
-            else System.out.println(totalSecs+cpt);
+            else
+            {
+                int seconds = (totalSecs + cpt) % 60, minutes = ((totalSecs + cpt) / 60) % 60;
+                System.out.println(minutes+"m "+seconds+"s");
+            }
         }
     };
 

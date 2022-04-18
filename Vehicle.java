@@ -14,4 +14,22 @@ public class Vehicle
 
     public String getPlate() { return plate; }
     public void setPlate(String plate) { this.plate = plate; }
+
+    public static String englishDoYouSpeakIt(String french)
+    {
+        switch ( french )
+        {
+            case "moto":
+                return "bike";
+
+            case "camionette":
+                return "truck";
+
+            case "voiture":
+                return "car";
+
+            default:
+                return "other";
+        }
+    }
 }

@@ -25,7 +25,7 @@ public class Simulator
 
             if ( cpt >= secs )
             {
-                car = new Vehicle(line.split(",")[1], line.split(",")[2]);
+                car = new Vehicle(Vehicle.englishDoYouSpeakIt(line.split(",")[1]), line.split(",")[2]);
                 LogicPark.registerVehicle(car);
 
                 totalSecs += cpt;

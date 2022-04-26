@@ -12,3 +12,6 @@ if %errorlevel% equ 0 (
 
 del *.class
 pause
+
+::javac --module-path javafx/lib/ --add-modules=javafx.base,javafx.controls,javafx.fxml,javafx.graphics,javafx.media,javafx.swing,javafx.web HELBPark.java
+::java --module-path javafx/lib/ --add-modules=javafx.base,javafx.controls,javafx.fxml,javafx.graphics,javafx.media,javafx.swing,javafx.web HELBPark.java

@@ -1,10 +1,11 @@
 public class LogicPark 
 {
-    static IGraphics form = new Form();
+    static IGraphics form;
     static Simulator simu;
 
-    public static void start()
+    public static void start(IGraphics form)
     {
+        LogicPark.form = form; 
         Simulator.getInstance();
     }
     

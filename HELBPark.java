@@ -1,10 +1,13 @@
-import javafx.application.Application;  
-import javafx.stage.Stage;  
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.stage.Stage;
+import javafx.scene.Parent;
 import javafx.scene.Scene;  
 import javafx.scene.control.Button;  
 import javafx.scene.layout.StackPane;  
 import javafx.event.ActionEvent;  
-import javafx.event.EventHandler;  
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;  
 
 public class HELBPark extends Application implements IGraphics
 {
@@ -21,6 +24,7 @@ public class HELBPark extends Application implements IGraphics
     @Override  
     public void start(Stage primaryStage) throws Exception 
     {  
+        Parent root = FXMLLoader.load(getClass().getResource("Test.fxml"));
         primaryStage.setTitle("Hello !");
         
         button = new Button();
@@ -49,7 +53,7 @@ public class HELBPark extends Application implements IGraphics
         StackPane layout = new StackPane();
         layout.getChildren().add(button);
 
-        Scene scene = new Scene(layout, 300, 250);
+        Scene scene = new Scene(root/*layout*/, 300, 250);
         primaryStage.setScene(scene);
         primaryStage.show();
     }  
@@ -58,6 +62,8 @@ public class HELBPark extends Application implements IGraphics
 
     public void showText(String x)
     {
-        button.setText(x);
+        Platform.runLater(() -> {
+            button.setText(x);
+        });
     }
 }

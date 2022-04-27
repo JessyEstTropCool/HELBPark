@@ -5,13 +5,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <Label alignment="CENTER" prefHeight="82.0" prefWidth="600.0" text="HELBPark" textAlignment="CENTER">
       <font>
         <Font name="Segoe UI Black" size="72.0" />
       </font>
     </Label>
-      <Button layoutX="254.0" layoutY="119.0" mnemonicParsing="false" prefHeight="82.0" prefWidth="92.0" text="Button" />
+      <Button layoutX="150.0" layoutY="209.0" mnemonicParsing="false" prefHeight="82.0" prefWidth="301.0" text="hi" />
   </children>
 </AnchorPane>

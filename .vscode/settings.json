@@ -1,0 +1,6 @@
+{
+    "java.help.shareDiagnostics": true,
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar"
+    ]
+}

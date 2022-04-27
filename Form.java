@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 public class Form extends Application implements IGraphics
 {
     Button button;
+    int compt = 1;
 
     public static void main (String[] args)  
     {  
@@ -22,6 +23,26 @@ public class Form extends Application implements IGraphics
         
         button = new Button();
         button.setText("Click me");
+        button.setOnAction(e -> {
+            String s = "th";
+
+            switch ( compt % 10 )
+            {
+                case 1:
+                    s = "st";
+                    break;
+
+                case 2:
+                    s = "nd";
+                    break;
+
+                case 3:
+                    s = "rd";
+                    break;
+            }
+
+            System.out.println("Hello " + compt++ + s + " world");
+        });
 
         StackPane layout = new StackPane();
         layout.getChildren().add(button);

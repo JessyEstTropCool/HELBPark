@@ -22,3 +22,6 @@
 -Places de parking
 -plaques aleatoire
 -Simulation V
+
+Mettre javafx dans les program files
+mettre path au fichier bin

@@ -8,6 +8,8 @@ import javafx.event.EventHandler;
 
 public class Form extends Application implements IGraphics
 {
+    Button button;
+
     public static void main (String[] args)  
     {  
         launch(args);  
@@ -16,22 +18,17 @@ public class Form extends Application implements IGraphics
     @Override  
     public void start(Stage primaryStage) throws Exception 
     {  
-        Button btn1 = new Button("Say, Hello World");
-        btn1.setOnAction(new EventHandler<ActionEvent>() {  
-              
-            @Override  
-            public void handle(ActionEvent arg0) {   
-                System.out.println("hello world");  
-            }  
-        });  
+        primaryStage.setTitle("Hello !");
+        
+        button = new Button();
+        button.setText("Click me");
 
-        StackPane root=new StackPane();  
-        root.getChildren().add(btn1);  
-        Scene scene=new Scene(root);   
+        StackPane layout = new StackPane();
+        layout.getChildren().add(button);
 
-        primaryStage.setScene(scene);  
-        primaryStage.setTitle("First JavaFX Application");  
-        primaryStage.show();  
+        Scene scene = new Scene(layout, 300, 250);
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }  
 
     //probablement singleton

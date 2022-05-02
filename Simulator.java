@@ -35,13 +35,15 @@ public class Simulator
                 {
                     if ( reader.hasNextLine() )
                     {
+                        int seconds = totalSecs % 60, minutes = (totalSecs / 60) % 60;
                         line = reader.nextLine();
                         secs = Integer.parseInt(line.split(",")[0]);
+                        System.out.println(minutes+"m "+seconds+"s CHANGE !!!!!!");
                     }
                     else 
                     {
                         int seconds = totalSecs % 60, minutes = (totalSecs / 60) % 60;
-                        System.out.println(minutes+"m "+seconds+"s");
+                        System.out.println(minutes+"m "+seconds+"s END !!!!!!!");
                         reader.close();
                         timer.cancel();
                     }

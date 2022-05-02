@@ -11,6 +11,6 @@ public class LogicPark
     
     public static void registerVehicle(Vehicle v)
     {
-        form.showText(v+" "+v.getType()+" ["+v.getPlate()+"]");
+        form.showText(v.getType()+" ["+v.getPlate()+"]");
     }
 }

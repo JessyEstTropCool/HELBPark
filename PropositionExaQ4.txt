@@ -1,0 +1,6 @@
+Sujet : "HELBPark", Application de gestion de parking avec des promotions changantes
+
+Fonctionnalités supplémentaires :
+-Forfait à l'heure (au lieu d'à la journée)
+-Carte de fidélité (après 17 utilisations, la 18e est seulement a 99.8% du prix)
+-Amendes si on reste après fermeture, a regler à la prochaine utilisation

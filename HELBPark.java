@@ -4,13 +4,22 @@ import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;  
 import javafx.scene.control.Button;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.image.Image;
-import javafx.fxml.FXMLLoader;  
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;  
 
 public class HELBPark extends Application implements IGraphics
 {
-    static Button button;
+    Button button;
+    GridPane container;
     int compt = 1;
+    static final int MAX_COLUMNS = 5, TOTAL_CELLS = 20; //total cells a déplacer dans modèle
 
     public static void main (String[] args)  
     {  
@@ -27,9 +36,45 @@ public class HELBPark extends Application implements IGraphics
         primaryStage.getIcons().add(new Image("icon.png"));
 
         button = (Button)loader.getNamespace().get("coolButton");
+        container = (GridPane)loader.getNamespace().get("parkingContainer");
+
+        for ( int compt = 0; compt < MAX_COLUMNS; compt++ )
+        {
+            ColumnConstraints col = new ColumnConstraints(); //container.getColumnConstraints().get(0);
+            col.setHalignment(HPos.CENTER);
+            col.setHgrow(Priority.ALWAYS);
+            col.setMinWidth(10);
+
+            container.getColumnConstraints().add(col);
+        }
+
+        RowConstraints row;
+
+        for ( int compt = 0; compt < TOTAL_CELLS; compt++)
+        {
+            if ( compt % MAX_COLUMNS == 0 )
+            {
+                row = new RowConstraints();//container.getRowConstraints().get(0);
+                row.setValignment(VPos.CENTER);
+                row.setVgrow(Priority.ALWAYS);
+                row.setMinHeight(10);
+
+                container.getRowConstraints().add(row);
+            }
+
+            Button gridButton = new Button(""+compt);
+            gridButton.setAlignment(Pos.CENTER);
+            gridButton.setMaxHeight(Double.MAX_VALUE);
+            gridButton.setMaxWidth(Double.MAX_VALUE);
+            
+            GridPane.setColumnIndex(gridButton, compt % MAX_COLUMNS);
+            GridPane.setRowIndex(gridButton, compt / MAX_COLUMNS);
+
+            container.getChildren().add(gridButton);
+        }
         
         //button = new Button();
-        button.setText("Click me");
+        button.setText("");
         button.setOnAction(e -> {
             String s = "th";
 

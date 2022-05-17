@@ -1,0 +1,12 @@
+GRASP
+Créateur : conteneur crée et s'occupe du contenu
+Expert info : on va récup un truc chez le truc qui connait
+Faible couplage : oui
+Controlleur / MVC : classe qui gere les events et représente le truc global, oui
+Forte Cohésion : Diviser pr mieux regner, oui
+
+GOF
+Fabrique / factory : classe pour instancier des trucs compliqué, oui voiture & tickets
+Singleton : un et seulement un, oui simulateur
+Strétégie : héritage x100 pour genre 1 fonction
+Observer : duolingo pour ui, oui

@@ -9,6 +9,7 @@ public class Simulator
     private final static int SECOND = 1000;
 
     private static Simulator instance = null;
+    private static LogicPark controller = null;
 
     private Scanner reader;
     private Timer timer = new Timer();
@@ -16,6 +17,7 @@ public class Simulator
     private File simfile;
     private String line;
     private Vehicle car;
+    private boolean ok = false;
 
     TimerTask ttask = new TimerTask() {
         @Override
@@ -26,7 +28,7 @@ public class Simulator
             if ( cpt >= secs )
             {
                 car = new Vehicle(Vehicle.englishDoYouSpeakIt(line.split(",")[1]), line.split(",")[2]);
-                LogicPark.registerVehicle(car);
+                controller.registerVehicle(car);
 
                 totalSecs += cpt;
                 cpt = 0;
@@ -81,7 +83,7 @@ public class Simulator
             {
                 line = reader.nextLine();
                 secs = Integer.parseInt(line.split(",")[0]);
-                timer.scheduleAtFixedRate(ttask, SECOND, SECOND);
+                ok = true;
             }
             else reader.close();
         } 
@@ -90,5 +92,16 @@ public class Simulator
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+    }
+
+    public void startSimulation()
+    {
+        if ( ok ) timer.scheduleAtFixedRate(ttask, SECOND, SECOND);
+        else System.out.println("An error occurred.");
+    }
+
+    public static void setController(LogicPark cont)
+    {
+        controller = cont;
     }
 }

@@ -1,16 +1,25 @@
 public class LogicPark 
 {
-    static IGraphics form;
-    static Simulator simu;
+    IGraphics form;
+    Simulator simu;
 
-    public static void start(IGraphics form)
+    public LogicPark(IGraphics form)
     {
-        LogicPark.form = form; 
-        Simulator.getInstance();
+        this.form = form;
+        simu = Simulator.getInstance();
+        Simulator.setController(this);
+
+        Parking.addObserver(form);
+    }
+
+    public void start()
+    {
+        simu.startSimulation();
     }
     
-    public static void registerVehicle(Vehicle v)
+    public void registerVehicle(Vehicle v)
     {
         form.showText(v.getType()+" ["+v.getPlate()+"]");
+        Parking.addVehicle(v);
     }
 }

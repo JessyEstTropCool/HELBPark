@@ -16,10 +16,11 @@ import javafx.geometry.VPos;
 
 public class HELBPark extends Application implements IGraphics
 {
+    LogicPark controller = new LogicPark(this);
     Button button;
     GridPane container;
     int compt = 1;
-    static final int MAX_COLUMNS = 5, TOTAL_CELLS = 20; //total cells a déplacer dans modèle
+    static final int MAX_COLUMNS = 5; //total cells a déplacer dans modèle
 
     public static void main (String[] args)  
     {  
@@ -50,7 +51,7 @@ public class HELBPark extends Application implements IGraphics
 
         RowConstraints row;
 
-        for ( int compt = 0; compt < TOTAL_CELLS; compt++)
+        for ( int compt = 0; compt < Parking.getPlacesCount(); compt++)
         {
             if ( compt % MAX_COLUMNS == 0 )
             {
@@ -103,15 +104,29 @@ public class HELBPark extends Application implements IGraphics
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        LogicPark.start(this); 
-    }  
+        controller.start(); 
+    } 
+    
+    private void updateButtons(Vehicle[] vehicles)
+    {
 
-    //probablement singleton
+    }
 
+    @Override
     public void showText(String x)
     {
         Platform.runLater(() -> {
             button.setText(x);
+        });
+    }
+
+    @Override
+    public void update(Object o) 
+    {
+        Vehicle[] vehicles = (Vehicle[])o;
+        
+        Platform.runLater(() -> {
+            updateButtons(vehicles);
         });
     }
 }

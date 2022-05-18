@@ -1,12 +1,12 @@
 GRASP
-Créateur : conteneur crée et s'occupe du contenu
-Expert info : on va récup un truc chez le truc qui connait
-Faible couplage : oui
-Controlleur / MVC : classe qui gere les events et représente le truc global, oui
-Forte Cohésion : Diviser pr mieux regner, oui
+Créateur : conteneur crée et s'occupe du contenu : non, pas pour la création en tout cas
+Expert info : on va récup un truc chez le truc qui connait : oui apriori
+Faible couplage : oui, on appelle ça bien coder
+Controlleur / MVC : classe qui gere les events et représente le truc global : oui, comme on doit gèrer les boutons
+Forte Cohésion : Diviser pr mieux regner, oui, bien sur
 
 GOF
-Fabrique / factory : classe pour instancier des trucs compliqué, oui voiture & tickets
-Singleton : un et seulement un, oui simulateur
-Strétégie : héritage x100 pour genre 1 fonction
-Observer : duolingo pour ui, oui
+Fabrique / factory : classe pour instancier des trucs compliqué : oui, voiture & écriture de tickets
+Singleton : un et seulement un, potentiellement : simulateur ? Fabriques, s'il y a (ou statique) ?
+Strétégie : héritage x100 pour genre 1 fonction : oui, types de réductions
+Observer : duolingo pour ui : oui, vue javafx -> model de parking

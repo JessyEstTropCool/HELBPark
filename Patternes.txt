@@ -7,6 +7,9 @@ Forte Cohésion : Diviser pr mieux regner, oui, bien sur
 
 GOF
 Fabrique / factory : classe pour instancier des trucs compliqué : oui, voiture & écriture de tickets
+centraliser l'instenciation de vehicules
 Singleton : un et seulement un, potentiellement : simulateur ? Fabriques, s'il y a (ou statique) ?
-Strétégie : héritage x100 pour genre 1 fonction : oui, types de réductions
+singleton sur parking si justif 
+Strétégie : héritage x100 pour genre 1 fonction : oui, types de réductions comme les canards, strat pour chaque type de reduc
 Observer : duolingo pour ui : oui, vue javafx -> model de parking
+cohesion => déléguer responsabilité, séparer les roles

@@ -32,4 +32,9 @@ public class Vehicle
                 return "other";
         }
     }
+
+    public Vehicle clone()
+    {
+        return new Vehicle(type, plate);
+    }
 }

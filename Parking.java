@@ -1,46 +1,29 @@
-import java.util.ArrayList;
-
-public class Parking
+public class Parking 
 {
-    private static final int TOTAL_CELLS = 20;
-    private static final Vehicle[] places = new Vehicle[TOTAL_CELLS];
+    IGraphics form;
+    Simulator simu;
+    ParkSpaces model;
 
-    private static ArrayList<IGraphics> observers = new ArrayList<IGraphics>();
-
-    public static int getPlacesCount() { return TOTAL_CELLS; }
-
-    public static void addVehicle(Vehicle v) 
+    public Parking(IGraphics form)
     {
-        int i = 0;
-        boolean gotIn = false;
+        this.form = form;
+        simu = Simulator.getInstance();
+        model = new ParkSpaces();
 
-        while ( i < places.length && !gotIn )
-        {
-            if ( places[i] == null ) 
-            {
-                places[i] = v;
-                gotIn = true;
-            }
-
-            i++;
-        }
-
-        if ( !gotIn ) System.out.println("The "+v.getType()+" is gone");
+        Simulator.setController(this);
+        model.addObserver(form);
     }
 
-    public static void addObserver(IGraphics observer)
-    {
-        observers.add(observer);
-    }
+    public int getSpacesCount() { return model.getPlacesCount(); }
 
-    public static void removeObserver(IGraphics observer)
+    public void start()
     {
-        observers.remove(observer);
+        simu.startSimulation();
     }
-
-    public static void sendUpdate()
+    
+    public void registerVehicle(Vehicle v)
     {
-        for ( IGraphics obs : observers )
-            obs.update(places);
+        form.showText(v.getType()+" ["+v.getPlate()+"]");
+        model.addVehicle(v);
     }
 }

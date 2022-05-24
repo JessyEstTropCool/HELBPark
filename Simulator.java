@@ -9,7 +9,7 @@ public class Simulator
     private final static int SECOND = 1000;
 
     private static Simulator instance = null;
-    private static LogicPark controller = null;
+    private static Parking controller = null;
 
     private Scanner reader;
     private Timer timer = new Timer();
@@ -100,7 +100,7 @@ public class Simulator
         else System.out.println("An error occurred.");
     }
 
-    public static void setController(LogicPark cont)
+    public static void setController(Parking cont)
     {
         controller = cont;
     }

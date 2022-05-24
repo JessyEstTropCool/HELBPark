@@ -4,20 +4,34 @@ import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;  
 import javafx.scene.control.Button;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.paint.Color;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.image.Image;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;  
 
 public class HELBPark extends Application implements IGraphics
 {
-    LogicPark controller = new LogicPark(this);
+    private final static Background[] BACKGROUNDS = {
+        new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)),
+        new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)),
+        new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)),
+        new Background(new BackgroundFill(Color.PURPLE, CornerRadii.EMPTY, Insets.EMPTY))
+    };
+
+    Parking controller = new Parking(this);
     Button button;
+    Button[] parkButtons;
     GridPane container;
     int compt = 1;
     static final int MAX_COLUMNS = 5; //total cells a déplacer dans modèle
@@ -50,8 +64,9 @@ public class HELBPark extends Application implements IGraphics
         }
 
         RowConstraints row;
+        parkButtons = new Button[controller.getSpacesCount()];
 
-        for ( int compt = 0; compt < Parking.getPlacesCount(); compt++)
+        for ( int compt = 0; compt < controller.getSpacesCount(); compt++)
         {
             if ( compt % MAX_COLUMNS == 0 )
             {
@@ -67,11 +82,16 @@ public class HELBPark extends Application implements IGraphics
             gridButton.setAlignment(Pos.CENTER);
             gridButton.setMaxHeight(Double.MAX_VALUE);
             gridButton.setMaxWidth(Double.MAX_VALUE);
+            gridButton.setTextAlignment(TextAlignment.CENTER);
+            gridButton.setStyle("-fx-border-color: WHITE; -fx-border-width: 2px; ");
+            gridButton.setBackground(BACKGROUNDS[0]);
+            gridButton.textFillProperty().set(Color.WHITE);
             
             GridPane.setColumnIndex(gridButton, compt % MAX_COLUMNS);
             GridPane.setRowIndex(gridButton, compt / MAX_COLUMNS);
 
             container.getChildren().add(gridButton);
+            parkButtons[compt] = gridButton;
         }
         
         //button = new Button();
@@ -107,9 +127,34 @@ public class HELBPark extends Application implements IGraphics
         controller.start(); 
     } 
     
-    private void updateButtons(Vehicle[] vehicles)
+    private void updateButtons(ParkSpaces model)
     {
+        for ( int compt = 0; compt < model.getPlacesCount(); compt++ )
+        {
+            if ( model.getVehicle(compt) != null )
+            {
+                parkButtons[compt].setText(compt+"\n"+model.getVehicle(compt).getPlate());
+                switch ( model.getVehicle(compt).getType() )
+                {
+                    case "bike":
+                        parkButtons[compt].setBackground(BACKGROUNDS[1]);
+                        break;
+                    
+                    case "car":
+                        parkButtons[compt].setBackground(BACKGROUNDS[2]);
+                        break;
 
+                    case "truck":
+                        parkButtons[compt].setBackground(BACKGROUNDS[3]);
+                        break;
+                }
+            }
+            else
+            {
+                parkButtons[compt].setBackground(BACKGROUNDS[0]);
+                parkButtons[compt].setText(""+compt);
+            }
+        }
     }
 
     @Override
@@ -123,10 +168,10 @@ public class HELBPark extends Application implements IGraphics
     @Override
     public void update(Object o) 
     {
-        Vehicle[] vehicles = (Vehicle[])o;
+        ParkSpaces observable = (ParkSpaces)o;
         
         Platform.runLater(() -> {
-            updateButtons(vehicles);
+            updateButtons(observable);
         });
     }
 }

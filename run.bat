@@ -13,5 +13,7 @@ if %errorlevel% equ 0 (
 echo Deleting classes...
 del *.class
 
+pause
+
 ::javac --module-path libs/ --add-modules=javafx.base,javafx.controls,javafx.fxml,javafx.graphics,javafx.media,javafx.swing,javafx.web *.java
 ::java --module-path libs/ --add-modules=javafx.base,javafx.controls,javafx.fxml,javafx.graphics,javafx.media,javafx.swing,javafx.web Form

@@ -5,7 +5,13 @@ public class ParkSpaces
     private final int TOTAL_CELLS = 20;
     private final Vehicle[] places = new Vehicle[TOTAL_CELLS];
 
+    private Simulator simu = Simulator.getInstance();
     private ArrayList<IGraphics> observers = new ArrayList<IGraphics>();
+
+    public ParkSpaces()
+    {
+        Simulator.setModel(this);
+    }
 
     public int getPlacesCount() { return TOTAL_CELLS; }
 
@@ -35,6 +41,9 @@ public class ParkSpaces
 
         sendUpdate();
     }
+
+    public void startSimulation() { simu.startSimulation(); }
+    public void stopSimulation() { simu.stopSimulation(); }
 
     public void addObserver(IGraphics observer)
     {

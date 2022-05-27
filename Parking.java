@@ -1,29 +1,33 @@
 public class Parking 
 {
     IGraphics form;
-    Simulator simu;
     ParkSpaces model;
 
     public Parking(IGraphics form)
     {
         this.form = form;
-        simu = Simulator.getInstance();
         model = new ParkSpaces();
 
-        Simulator.setController(this);
+        form.setCellCount(model.getPlacesCount());
+
         model.addObserver(form);
     }
 
-    public int getSpacesCount() { return model.getPlacesCount(); }
+    //public int getSpacesCount() { return model.getPlacesCount(); }
 
     public void start()
     {
-        simu.startSimulation();
+        model.startSimulation();
     }
     
-    public void registerVehicle(Vehicle v)
+    /*public void registerVehicle(Vehicle v)
     {
         form.showText(v.getType()+" ["+v.getPlate()+"]");
         model.addVehicle(v);
+    }*/
+
+    public void closing()
+    {
+        model.stopSimulation();
     }
 }

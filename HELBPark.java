@@ -1,5 +1,6 @@
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;  
@@ -23,17 +24,17 @@ import javafx.geometry.VPos;
 public class HELBPark extends Application implements IGraphics
 {
     private final static Background[] BACKGROUNDS = {
-        new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)),
-        new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)),
-        new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)),
-        new Background(new BackgroundFill(Color.PURPLE, CornerRadii.EMPTY, Insets.EMPTY))
+        new Background(new BackgroundFill(Color.valueOf("#00A74F"), CornerRadii.EMPTY, Insets.EMPTY)),
+        new Background(new BackgroundFill(Color.valueOf("#0071B5"), CornerRadii.EMPTY, Insets.EMPTY)),
+        new Background(new BackgroundFill(Color.valueOf("#EA1C24"), CornerRadii.EMPTY, Insets.EMPTY)),
+        new Background(new BackgroundFill(Color.valueOf("#872971"), CornerRadii.EMPTY, Insets.EMPTY))
     };
 
-    Parking controller = new Parking(this);
+    Parking controller;
     Button button;
     Button[] parkButtons;
     GridPane container;
-    int compt = 1;
+    private int compt = 1, cellCount = 0;
     static final int MAX_COLUMNS = 5; //total cells a déplacer dans modèle
 
     public static void main (String[] args)  
@@ -45,7 +46,9 @@ public class HELBPark extends Application implements IGraphics
     @Override  
     public void start(Stage primaryStage) throws Exception 
     {  
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Test.fxml"));
+        controller = new Parking(this);
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreen.fxml"));
         Parent root = loader.load();
         primaryStage.setTitle("HELBPark's funky parking");
         primaryStage.getIcons().add(new Image("icon.png"));
@@ -64,9 +67,9 @@ public class HELBPark extends Application implements IGraphics
         }
 
         RowConstraints row;
-        parkButtons = new Button[controller.getSpacesCount()];
+        parkButtons = new Button[cellCount];
 
-        for ( int compt = 0; compt < controller.getSpacesCount(); compt++)
+        for ( int compt = 0; compt < cellCount; compt++)
         {
             if ( compt % MAX_COLUMNS == 0 )
             {
@@ -82,10 +85,19 @@ public class HELBPark extends Application implements IGraphics
             gridButton.setAlignment(Pos.CENTER);
             gridButton.setMaxHeight(Double.MAX_VALUE);
             gridButton.setMaxWidth(Double.MAX_VALUE);
+            gridButton.prefWidthProperty().bind(container.widthProperty().divide(MAX_COLUMNS));
+
             gridButton.setTextAlignment(TextAlignment.CENTER);
+
             gridButton.setStyle("-fx-border-color: WHITE; -fx-border-width: 2px; ");
             gridButton.setBackground(BACKGROUNDS[0]);
             gridButton.textFillProperty().set(Color.WHITE);
+            
+            final int index = compt;
+
+            gridButton.setOnAction(e -> {
+                SpaceModifier.display(index);
+            });
             
             GridPane.setColumnIndex(gridButton, compt % MAX_COLUMNS);
             GridPane.setRowIndex(gridButton, compt / MAX_COLUMNS);
@@ -120,7 +132,7 @@ public class HELBPark extends Application implements IGraphics
         /*StackPane layout = new StackPane();
         layout.getChildren().add(button);*/
 
-        Scene scene = new Scene(root/*layout*/, 500, 400);
+        Scene scene = new Scene(root/*layout*/, 750, 500);
         primaryStage.setScene(scene);
         primaryStage.show();
 
@@ -133,7 +145,7 @@ public class HELBPark extends Application implements IGraphics
         {
             if ( model.getVehicle(compt) != null )
             {
-                parkButtons[compt].setText(compt+"\n"+model.getVehicle(compt).getPlate());
+                parkButtons[compt].setText(compt+" - "+model.getVehicle(compt).getPlate());
                 switch ( model.getVehicle(compt).getType() )
                 {
                     case "bike":
@@ -158,6 +170,12 @@ public class HELBPark extends Application implements IGraphics
     }
 
     @Override
+    public void setCellCount(int i)
+    {
+        cellCount = i;
+    }
+
+    @Override
     public void showText(String x)
     {
         Platform.runLater(() -> {
@@ -173,5 +191,11 @@ public class HELBPark extends Application implements IGraphics
         Platform.runLater(() -> {
             updateButtons(observable);
         });
+    }
+
+    @Override
+    public void stop(){
+        System.out.println("The end");
+        controller.closing();
     }
 }

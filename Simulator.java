@@ -9,7 +9,7 @@ public class Simulator
     private final static int SECOND = 1000;
 
     private static Simulator instance = null;
-    private static Parking controller = null;
+    private static ParkSpaces model = null;
 
     private Scanner reader;
     private Timer timer = new Timer();
@@ -28,7 +28,7 @@ public class Simulator
             if ( cpt >= secs )
             {
                 car = new Vehicle(Vehicle.englishDoYouSpeakIt(line.split(",")[1]), line.split(",")[2]);
-                controller.registerVehicle(car);
+                model.addVehicle(car);
 
                 totalSecs += cpt;
                 cpt = 0;
@@ -44,10 +44,7 @@ public class Simulator
                     }
                     else 
                     {
-                        int seconds = totalSecs % 60, minutes = (totalSecs / 60) % 60;
-                        System.out.println(minutes+"m "+seconds+"s END !!!!!!!");
-                        reader.close();
-                        timer.cancel();
+                        stopSimulation();
                     }
                 }
                 catch (Exception e) 
@@ -100,8 +97,17 @@ public class Simulator
         else System.out.println("An error occurred.");
     }
 
-    public static void setController(Parking cont)
+    public static void setModel(ParkSpaces spaces)
     {
-        controller = cont;
+        model = spaces;
+    }
+
+    public void stopSimulation()
+    {
+        int seconds = totalSecs % 60, minutes = (totalSecs / 60) % 60;
+        System.out.println(minutes+"m "+seconds+"s END !!!!!!!");
+        reader.close();
+        timer.cancel();
+        timer.purge();
     }
 }

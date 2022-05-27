@@ -1,0 +1,25 @@
+*
+{
+    -fx-font-family:  HoratioDMed;
+    -fx-text-fill: WHITE;
+}
+
+.blue, .list-cell { -fx-background-color: #152FC1; }
+.darkblue { -fx-background-color: #0D1F7A; }
+
+.card
+{
+    -fx-background-color: #152FC1;
+    -fx-border-color: WHITE;
+    -fx-border-width: 5px;
+}
+
+.list-cell:hover, Button.card:hover
+{
+    -fx-background-color: #0b3fcc;
+}
+
+.list-cell:pressed, Button.card:pressed
+{
+    -fx-background-color: #186be7;
+}

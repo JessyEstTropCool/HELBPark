@@ -1,9 +1,9 @@
--Places de parking 0-19
+-Places de parking 0-19 V
 -3 types de véhicules
--7 réducs
+-7 réducs V
 
--Arrivage de vehicule (tjr au plus petit)
--commence à 1h, vidé a 23h
+-Arrivage de vehicule (tjr au plus petit) V
+-commence à 1h, vidé a 23h X
 -moto 10, voiture 20, camiopn 30 tjr le même prit pour la journée
 -rrr
 
@@ -13,8 +13,8 @@
 -nomenclature de ticket
 -probabilités des tickets
 
--UI
--Codes couleurs + plaques dans les places de parking
+-UI V
+-Codes couleurs + plaques dans les places de parking V
 -Possibilité de changer vehicule ou liberer place
 
 -Analyse (voir tt ce qu'on a besoin)

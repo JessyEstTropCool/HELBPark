@@ -3,21 +3,26 @@ import java.util.ArrayList;
 public class ParkSpaces
 {
     private final int TOTAL_CELLS = 20;
-    private final Vehicle[] places = new Vehicle[TOTAL_CELLS];
+    private final Vehicle[] spots = new Vehicle[TOTAL_CELLS];
 
     private Simulator simu = Simulator.getInstance();
-    private ArrayList<IGraphics> observers = new ArrayList<IGraphics>();
+    private ArrayList<IObserver> observers = new ArrayList<IObserver>();
 
     public ParkSpaces()
     {
         Simulator.setModel(this);
     }
 
-    public int getPlacesCount() { return TOTAL_CELLS; }
+    public int getSpotsCount() { return TOTAL_CELLS; }
 
+    /**
+     * Retourne un véhicule des places disponible, à l'index spécifié
+     * @param index index du véhicule à récupérer
+     * @return Retourne le vehicule à l'index spécifié ou null s'il n'y en a pas
+     */
     public Vehicle getVehicle(int index)
     {
-        if ( places[index] != null ) return places[index].clone();
+        if ( spots[index] != null ) return spots[index].clone();
         return null;
     }
 
@@ -26,11 +31,11 @@ public class ParkSpaces
         int i = 0;
         boolean gotIn = false;
 
-        while ( i < places.length && !gotIn )
+        while ( i < spots.length && !gotIn )
         {
-            if ( places[i] == null ) 
+            if ( spots[i] == null ) 
             {
-                places[i] = v;
+                spots[i] = v;
                 gotIn = true;
             }
 
@@ -42,22 +47,32 @@ public class ParkSpaces
         sendUpdate();
     }
 
+    public void removeVehicle(int index)
+    {
+        if ( index >= 0 && index < getSpotsCount() )
+        {
+            spots[index] = null;
+
+            sendUpdate();
+        }
+    }
+
     public void startSimulation() { simu.startSimulation(); }
     public void stopSimulation() { simu.stopSimulation(); }
 
-    public void addObserver(IGraphics observer)
+    public void addObserver(IObserver observer)
     {
         observers.add(observer);
     }
 
-    public void removeObserver(IGraphics observer)
+    public void removeObserver(IObserver observer)
     {
         observers.remove(observer);
     }
 
     public void sendUpdate()
     {
-        for ( IGraphics obs : observers )
+        for ( IObserver obs : observers )
             obs.update(this);
     }
 }

@@ -1,17 +1,25 @@
 *
 {
-    -fx-font-family:  HoratioDMed;
+    -fx-font-family: HoratioDMed;
     -fx-text-fill: WHITE;
 }
 
 .blue, .list-cell { -fx-background-color: #152FC1; }
 .darkblue { -fx-background-color: #0D1F7A; }
+.danger { -fx-background-color: #EA1C24 !important; }
 
 .card
 {
     -fx-background-color: #152FC1;
     -fx-border-color: WHITE;
     -fx-border-width: 5px;
+}
+
+.parkButton
+{
+    -fx-border-color: WHITE;
+    -fx-border-width: 2px;
+    -fx-font-size: 18px;
 }
 
 .list-cell:hover, Button.card:hover

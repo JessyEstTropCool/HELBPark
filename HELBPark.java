@@ -1,10 +1,14 @@
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;  
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.ColumnConstraints;
@@ -23,6 +27,13 @@ import javafx.geometry.VPos;
 
 public class HELBPark extends Application implements IGraphics
 {
+    private final int MIN_WIDTH = 500;
+    private final int MIN_HEIGHT = 400;
+    private final int INITIAL_WIDTH = 750;
+    private final int INITIAL_HEIGHT = 500;
+    private final int POPUP_WIDTH = 250;
+    private final int POPUP_HEIGHT = 250;
+
     private final static Background[] BACKGROUNDS = {
         new Background(new BackgroundFill(Color.valueOf("#00A74F"), CornerRadii.EMPTY, Insets.EMPTY)),
         new Background(new BackgroundFill(Color.valueOf("#0071B5"), CornerRadii.EMPTY, Insets.EMPTY)),
@@ -34,7 +45,7 @@ public class HELBPark extends Application implements IGraphics
     Button button;
     Button[] parkButtons;
     GridPane container;
-    private int compt = 1, cellCount = 0;
+    private int cellCount = 0;
     static final int MAX_COLUMNS = 5; //total cells a déplacer dans modèle
 
     public static void main (String[] args)  
@@ -46,12 +57,11 @@ public class HELBPark extends Application implements IGraphics
     @Override  
     public void start(Stage primaryStage) throws Exception 
     {  
-        controller = new Parking(this);
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreen.fxml"));
         Parent root = loader.load();
-        primaryStage.setTitle("HELBPark's funky parking");
-        primaryStage.getIcons().add(new Image("icon.png"));
+        Scene scene = new Scene(root, INITIAL_WIDTH, INITIAL_HEIGHT);
+
+        controller = new Parking(this);
 
         button = (Button)loader.getNamespace().get("coolButton");
         container = (GridPane)loader.getNamespace().get("parkingContainer");
@@ -89,14 +99,14 @@ public class HELBPark extends Application implements IGraphics
 
             gridButton.setTextAlignment(TextAlignment.CENTER);
 
-            gridButton.setStyle("-fx-border-color: WHITE; -fx-border-width: 2px; ");
+            gridButton.getStyleClass().add("parkButton"); //.setStyle("-fx-border-color: WHITE; -fx-border-width: 2px; "); //TODO magic
             gridButton.setBackground(BACKGROUNDS[0]);
             gridButton.textFillProperty().set(Color.WHITE);
             
             final int index = compt;
 
             gridButton.setOnAction(e -> {
-                SpaceModifier.display(index);
+                controller.vehicleButtonPressed(index);// SpaceModifier.display(index);
             });
             
             GridPane.setColumnIndex(gridButton, compt % MAX_COLUMNS);
@@ -106,42 +116,30 @@ public class HELBPark extends Application implements IGraphics
             parkButtons[compt] = gridButton;
         }
         
-        //button = new Button();
         button.setText("");
         button.setOnAction(e -> {
-            String s = "th";
-
-            switch ( compt % 10 )
-            {
-                case 1:
-                    s = "st";
-                    break;
-
-                case 2:
-                    s = "nd";
-                    break;
-
-                case 3:
-                    s = "rd";
-                    break;
-            }
-
-            System.out.println("Hello " + compt++ + s + " world");
+            showError(button.getText());
         });
 
-        /*StackPane layout = new StackPane();
-        layout.getChildren().add(button);*/
-
-        Scene scene = new Scene(root/*layout*/, 750, 500);
+        primaryStage.setTitle("HELBPark's funky parking");
+        primaryStage.getIcons().add(new Image("icon.png"));
+        primaryStage.setMinWidth(MIN_WIDTH);
+        primaryStage.setMinHeight(MIN_HEIGHT);
         primaryStage.setScene(scene);
         primaryStage.show();
 
         controller.start(); 
     } 
+
+    @Override
+    public void stop()
+    {
+        controller.closing();
+    }
     
     private void updateButtons(ParkSpaces model)
     {
-        for ( int compt = 0; compt < model.getPlacesCount(); compt++ )
+        for ( int compt = 0; compt < model.getSpotsCount(); compt++ )
         {
             if ( model.getVehicle(compt) != null )
             {
@@ -194,8 +192,86 @@ public class HELBPark extends Application implements IGraphics
     }
 
     @Override
-    public void stop(){
-        System.out.println("The end");
-        controller.closing();
+    @SuppressWarnings("unchecked")
+    public void showVehicleMenu(int index, boolean occupied) 
+    {
+        try
+        {
+            Stage window = new Stage();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Popup.fxml"));
+            Parent root = loader.load();
+
+            Button bApply = (Button)loader.getNamespace().get("bApply");
+            Button bFree = (Button)loader.getNamespace().get("bFree");
+            Label lSpaceNbr = (Label)loader.getNamespace().get("lSpaceNbr");
+            Label lPay = (Label)loader.getNamespace().get("lPay");
+            Label lOccupied = (Label)loader.getNamespace().get("lOccupied");
+            ComboBox<String> cbType = (ComboBox<String>)loader.getNamespace().get("cbType");
+            TextField tfPlate = (TextField)loader.getNamespace().get("tfPlate");
+
+            window.setTitle("HELBPark");
+            window.getIcons().add(new Image("icon.png"));
+            window.initModality(Modality.APPLICATION_MODAL);
+            window.setMinWidth(POPUP_WIDTH);
+            window.setMinHeight(POPUP_HEIGHT);
+
+            lSpaceNbr.setText("Space "+index);
+            lPay.setText("Give us your monies");
+            lOccupied.setText((occupied)? "Occupied" : "Free");
+
+            bApply.setOnAction(e -> {
+                System.out.println(cbType.getValue());
+            });
+
+            bFree.setOnAction(e -> {
+                controller.freeSpace(index);
+                window.close();
+            });
+
+            cbType.getItems().addAll("Bike", "Car", "Truck");
+            tfPlate.setText("---");
+    
+            Scene scene = new Scene(root);
+            window.setScene(scene);
+            window.showAndWait();
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void showError(String message)
+    {
+        try
+        {
+            Stage window = new Stage();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Error.fxml"));
+            Parent root = loader.load();
+
+            Button bOk = (Button)loader.getNamespace().get("bOk");
+            Label lMessage = (Label)loader.getNamespace().get("lMessage");
+
+            window.setTitle("HELBPark : Error");
+            window.getIcons().add(new Image("icon.png"));
+            window.initModality(Modality.APPLICATION_MODAL);
+            window.setMinWidth(POPUP_WIDTH);
+            window.setMinHeight(POPUP_HEIGHT);
+
+            lMessage.setText(message);
+
+            bOk.setOnAction(e -> {
+                window.close();
+            });
+    
+            Scene scene = new Scene(root);
+            window.setScene(scene);
+            window.showAndWait();
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+        }
     }
 }

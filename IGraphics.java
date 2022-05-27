@@ -1,8 +1,10 @@
-public interface IGraphics 
+public interface IGraphics extends IObserver
 {
     void showText(String x);
 
-    void update(Object o);
-
     void setCellCount(int i);
+
+    void showError(String message);
+
+    void showVehicleMenu(int index, boolean occupied);
 }

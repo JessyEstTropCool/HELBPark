@@ -77,7 +77,7 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="cbType" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Hi" style="-fx-font-size: 14pt;" styleClass="card" HBox.hgrow="ALWAYS" />
+                  <ComboBox fx:id="cbType" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="---" style="-fx-font-size: 14pt;" styleClass="card" HBox.hgrow="ALWAYS" />
                </children>
                <GridPane.margin>
                   <Insets bottom="5.0" left="10.0" top="5.0" />
@@ -93,7 +93,7 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="tfPlate" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="0.0" prefWidth="0.0" promptText="Plate" styleClass="card" HBox.hgrow="ALWAYS">
+                  <TextField fx:id="tfPlate" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="0.0" prefWidth="0.0" promptText="---" styleClass="card" HBox.hgrow="ALWAYS">
                      <font>
                         <Font size="18.0" />
                      </font>

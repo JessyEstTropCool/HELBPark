@@ -6,25 +6,44 @@ import java.util.Locale;
 
 public class TicketPrinter 
 {
-    private static final String TICKET_DIR = "tickets/", PROMO_CODE_PREFIX = "PIERRE";
-    private static final String GOLD_SAMPLE = "HELBPARK", SILVER_SAMPLE = "OXP";
-    private static final String[] DAYS = new String[] { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
-    private static final int GOLD_GRID_SIZE = 3;
+    private static final String TICKET_DIR = "tickets/";
+    private static final String PROMO_CODE_PREFIX = "PIERRE";
+    private static final String GOLD_SAMPLE = "HELBPARK";
+    private static final String SILVER_SAMPLE = "OXP";
 
-    public static void makeTicket(int spotIndex, Vehicle vehicle, double finalPrice, String discountName)
+    private static final String[] DAYS = new String[] { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+
+    private static final int GOLD_GRID_SIZE = 3;
+    private static final int GOLD_MULTIPLIER = 2;
+    private static final int SILVER_MULTIPLIER = 2;
+
+    private static final int STANDARD_LOW_VALUE = 5;
+    private static final int STANDARD_HIGH_VALUE = 10;
+    private static final int SILVER_LOW_VALUE = 10;
+    private static final int SILVER_HIGH_VALUE = 15;
+    private static final int GOLD_LOW_VALUE = 20;
+    private static final int GOLD_HIGH_VALUE = 40;
+
+    private static final double INITIAL_CHANCE = 0.25;
+    private static final double ADDED_CHANCE = 0.25; 
+    private static final double HIGH_VALUE_CHANCE = 0.5;
+
+    public static String makeTicket(int spotIndex, Vehicle vehicle, double finalPrice, String discountName)
     {
         Calendar cal = Calendar.getInstance(Locale.getDefault());
         cal.setTime(new Date(System.currentTimeMillis()));
-        String datedir = String.format("%02d%02d%s/", cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH), String.format("%02d", cal.get(Calendar.YEAR)).substring(String.format("%02d", cal.get(Calendar.YEAR)).length() - 2));
+        String year = String.format("%02d", cal.get(Calendar.YEAR));
+        String datedir = String.format("%02d%02d%s/", cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH), year.substring(year.length() - 2));
         String filename = vehicle.getPlate();
 
-        double standardChance = 0.25, silverChance = 0.25, goldChance = 0.25, selectedTicket, ticketValue = 0;
-        String extraGame = "", ticketType = "Standard";
+        double standardChance = INITIAL_CHANCE, silverChance = INITIAL_CHANCE, goldChance = INITIAL_CHANCE, selectedTicket;
+        int ticketValue;
+        String extraGame = "", ticketType;
 
         //choix de ticket
-        if ( vehicle.getType() == "bike" ) standardChance += 0.25;
-        else if ( vehicle.getType() == "car" ) silverChance += 0.25;
-        else if ( vehicle.getType() == "truck" ) goldChance += 0.25;
+        if ( vehicle.getType() == VehicleFactory.BIKE ) standardChance += ADDED_CHANCE;
+        else if ( vehicle.getType() == VehicleFactory.CAR ) silverChance += ADDED_CHANCE;
+        else if ( vehicle.getType() == VehicleFactory.TRUCK ) goldChance += ADDED_CHANCE;
 
         selectedTicket = Math.random()*(standardChance + silverChance + goldChance);
 
@@ -32,10 +51,11 @@ public class TicketPrinter
         if ( selectedTicket < standardChance )
         {
             //ticket standard
-            if ( Math.random() > 0.5 ) ticketValue = 5;
-            else ticketValue = 10;
+            if ( Math.random() > HIGH_VALUE_CHANCE ) ticketValue = STANDARD_LOW_VALUE;
+            else ticketValue = STANDARD_HIGH_VALUE;
 
             filename += "_std.txt";
+            ticketType = "Standard";
         }
         else if ( selectedTicket < standardChance + silverChance )
         {
@@ -45,14 +65,14 @@ public class TicketPrinter
             filename += "_sil.txt";
             ticketType = "Silver";
 
-            if ( Math.random() > 0.5 ) ticketValue = 10;
-            else ticketValue = 15;
+            if ( Math.random() > HIGH_VALUE_CHANCE ) ticketValue = SILVER_LOW_VALUE;
+            else ticketValue = SILVER_HIGH_VALUE;
 
             extraGame = String.format("Game : %s, %s\n", gameChars[0], gameChars[1]);
 
             if ( gameChars[0] == gameChars[1] )
             {
-                ticketValue *= 2;
+                ticketValue *= SILVER_MULTIPLIER;
                 extraGame += "You win, discount is doubled !\n";
             }
         }
@@ -65,8 +85,8 @@ public class TicketPrinter
             filename += "_gol.txt";
             ticketType = "Gold";
 
-            if ( Math.random() > 0.5 ) ticketValue = 20;
-            else ticketValue = 40;
+            if ( Math.random() > HIGH_VALUE_CHANCE ) ticketValue = GOLD_LOW_VALUE;
+            else ticketValue = GOLD_HIGH_VALUE;
 
             extraGame = "Game :\n";
 
@@ -82,7 +102,7 @@ public class TicketPrinter
                 extraGame += "\n";
             }
 
-            //Vérification des colonnes et lignes; ne fonctionne que qi la grille est carré car on regarde les colonnes et les lignes en même temps
+            //Vérification des colonnes et lignes; ne fonctionne que si la grille est carré car on regarde les colonnes et les lignes en même temps
             for ( int comptx = 0; comptx < GOLD_GRID_SIZE; comptx++ )
             {
                 sameOnColumn = true;
@@ -102,7 +122,7 @@ public class TicketPrinter
 
             if ( winningTicket ) 
             {
-                ticketValue *= 2;
+                ticketValue *= GOLD_MULTIPLIER;
                 extraGame += "You win, discount is doubled !\n";
             }
         }
@@ -136,5 +156,7 @@ public class TicketPrinter
         {
             e.printStackTrace();
         }
+
+        return filename;
     }
 }

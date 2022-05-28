@@ -4,9 +4,9 @@ import java.util.Locale;
 
 public class Parking 
 {
-    IGraphics form;
-    ParkSpaces model;
-    DiscountType discount;
+    private IGraphics form;
+    private ParkSpaces model;
+    private DiscountType discount;
 
     public Parking(IGraphics form)
     {
@@ -45,11 +45,11 @@ public class Parking
 
     public void vehicleButtonPressed(int index)
     {
-        Vehicle v = model.getVehicle(index);
+        Vehicle vehicle = model.getVehicle(index);
 
-        if ( v != null ) 
+        if ( vehicle != null ) 
         {
-            form.showVehicleMenu(index, discount.applyDiscount(v.getBasePrice(), v), v);
+            form.showVehicleMenu(index, discount.applyDiscount(vehicle.getBasePrice(), vehicle), vehicle);
         }
     }
 
@@ -59,11 +59,11 @@ public class Parking
 
         if ( vehicle != null )
         {
-            TicketPrinter.makeTicket(index, vehicle, discount.applyDiscount(vehicle.getBasePrice(), vehicle), discount.toString());
+            String ticket = TicketPrinter.makeTicket(index, vehicle, discount.applyDiscount(vehicle.getBasePrice(), vehicle), discount.toString());
     
             model.removeVehicle(index);
     
-            form.showText("Spot "+index+" freed !");
+            form.showText("Ticket "+ticket+" created");
         }
         else
         {

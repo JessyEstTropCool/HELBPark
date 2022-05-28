@@ -26,7 +26,7 @@ public class ParkSpaces
         return null;
     }
 
-    public void addVehicle(Vehicle v) 
+    public void addVehicle(Vehicle vehicle) 
     {
         int i = 0;
         boolean gotIn = false;
@@ -35,21 +35,21 @@ public class ParkSpaces
         {
             if ( spots[i] == null ) 
             {
-                spots[i] = v;
+                spots[i] = vehicle;
                 gotIn = true;
             }
 
             i++;
         }
 
-        if ( !gotIn ) System.out.println("The "+v.getType()+" is gone");
+        if ( !gotIn ) System.out.println("The "+vehicle+" is gone");
 
         sendUpdate();
     }
 
-    public void replaceVehicle(int index, Vehicle v)
+    public void replaceVehicle(int index, Vehicle vehicle)
     {
-        spots[index] = v;
+        spots[index] = vehicle;
 
         sendUpdate();
     }

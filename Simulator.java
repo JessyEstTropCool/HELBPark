@@ -19,7 +19,7 @@ public class Simulator
     private Vehicle car;
     private boolean ok = false;
 
-    TimerTask ttask = new TimerTask() {
+    private TimerTask ttask = new TimerTask() {
         @Override
         public void run() 
         {
@@ -27,6 +27,7 @@ public class Simulator
 
             if ( cpt >= secs )
             {
+                //structure de ligne : [Nombre de secondes, type véhicule, immatriculation]
                 car = VehicleFactory.build(line.split(",")[1], line.split(",")[2]); 
                 model.addVehicle(car);
 
@@ -37,7 +38,7 @@ public class Simulator
                 {
                     if ( reader.hasNextLine() )
                     {
-                        int seconds = totalSecs % 60, minutes = (totalSecs / 60) % 60;
+                        int seconds = getSeconds(totalSecs), minutes = getMinutes(totalSecs);
                         line = reader.nextLine();
                         secs = Integer.parseInt(line.split(",")[0]);
                         System.out.println(minutes+"m "+seconds+"s CHANGE !!!!!!");
@@ -55,7 +56,7 @@ public class Simulator
             }
             else
             {
-                int seconds = (totalSecs + cpt) % 60, minutes = ((totalSecs + cpt) / 60) % 60;
+                int seconds = getSeconds(totalSecs + cpt), minutes = getMinutes(totalSecs + cpt);
                 System.out.println(minutes+"m "+seconds+"s");
             }
         }
@@ -104,10 +105,13 @@ public class Simulator
 
     public void stopSimulation()
     {
-        int seconds = totalSecs % 60, minutes = (totalSecs / 60) % 60;
+        int seconds = getSeconds(totalSecs), minutes = getMinutes(totalSecs);
         System.out.println(minutes+"m "+seconds+"s END !!!!!!!");
         reader.close();
         timer.cancel();
         timer.purge();
     }
+
+    private int getMinutes(int totalSeconds) { return (totalSeconds / 60) % 60; }
+    private int getSeconds(int totalSeconds) { return totalSeconds % 60; }
 }

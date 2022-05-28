@@ -16,4 +16,10 @@ public abstract class Vehicle
     {
         return VehicleFactory.build(getType(), getPlate());
     }
+
+    @Override
+    public String toString() 
+    {
+        return getType()+" ["+getPlate()+"]";
+    }
 }

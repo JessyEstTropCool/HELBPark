@@ -1,7 +1,7 @@
 public class Truck extends Vehicle
 {
     private static final int BASE_PRICE = 30;
-    private static final String TYPE_STRING = "truck";
+    private static final String TYPE_STRING = VehicleFactory.TRUCK;
 
     public Truck(String plate)
     {

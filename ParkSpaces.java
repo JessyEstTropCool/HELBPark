@@ -47,6 +47,13 @@ public class ParkSpaces
         sendUpdate();
     }
 
+    public void replaceVehicle(int index, Vehicle v)
+    {
+        spots[index] = v;
+
+        sendUpdate();
+    }
+
     public void removeVehicle(int index)
     {
         if ( index >= 0 && index < getSpotsCount() )

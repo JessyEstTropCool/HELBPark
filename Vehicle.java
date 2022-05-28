@@ -1,40 +1,19 @@
-public class Vehicle
+public abstract class Vehicle
 {
-    private String type;
     private String plate;
 
-    public Vehicle(String type, String plate)
+    public Vehicle(String plate)
     {
-        this.type = type;
         this.plate = plate;
     }
 
-    public String getType() { return type; }
-    public void setType(String type) { this.type = type; }
+    public abstract double getBasePrice();
+    public abstract String getType();
 
     public String getPlate() { return plate; }
-    public void setPlate(String plate) { this.plate = plate; }
-
-    public static String englishDoYouSpeakIt(String french)
-    {
-        switch ( french )
-        {
-            case "moto":
-                return "bike";
-
-            case "camionette":
-                return "truck";
-
-            case "voiture":
-                return "car";
-
-            default:
-                return "other";
-        }
-    }
 
     public Vehicle clone()
     {
-        return new Vehicle(type, plate);
+        return VehicleFactory.build(getType(), getPlate());
     }
 }

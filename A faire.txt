@@ -1,21 +1,21 @@
 -Places de parking 0-19 V
--3 types de véhicules
+-3 types de véhicules V
 -7 réducs V
 
 -Arrivage de vehicule (tjr au plus petit) V
 -commence à 1h, vidé a 23h X
--moto 10, voiture 20, camiopn 30 tjr le même prit pour la journée
--rrr
+-moto 10, voiture 20, camiopn 30 tjr le même prit pour la journée V
+-rrr V
 
--Sortie de client manuelle
--tickets jeu
--sytemes de répertoires par jour (DDMMYY)
--nomenclature de ticket
--probabilités des tickets
+-Sortie de client manuelle V
+-tickets jeu V
+-sytemes de répertoires par jour (DDMMYY) V
+-nomenclature de ticket V
+-probabilités des tickets V
 
 -UI V
 -Codes couleurs + plaques dans les places de parking V
--Possibilité de changer vehicule ou liberer place
+-Possibilité de changer vehicule ou liberer place V
 
 -Analyse (voir tt ce qu'on a besoin)
 -Affichage temp (console)
@@ -23,5 +23,5 @@
 -plaques aleatoire
 -Simulation V
 
-Mettre javafx dans les program files
-mettre path au fichier bin
+Mettre javafx dans les program files V
+mettre path au fichier bin V

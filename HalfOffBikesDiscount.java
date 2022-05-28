@@ -7,4 +7,10 @@ public class HalfOffBikesDiscount extends DiscountType
         
         return initialPrice;
     }
+
+    @Override
+    public String toString() 
+    {
+        return "Half off for bikes";
+    }
 }

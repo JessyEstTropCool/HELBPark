@@ -14,4 +14,9 @@ public class HalfOffOnEvenDayDiscount extends DiscountType
         
         return initialPrice;
     }
+
+    @Override
+    public String toString() {
+        return "Half off on an even day";
+    }
 }

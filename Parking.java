@@ -1,4 +1,3 @@
-import java.lang.ref.Cleaner.Cleanable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -47,18 +46,20 @@ public class Parking
     public void vehicleButtonPressed(int index)
     {
         Vehicle v = model.getVehicle(index);
-        boolean occupied = true;
 
-        if ( v == null ) occupied = false;
-
-        form.showVehicleMenu(index, occupied);
+        if ( v != null ) 
+        {
+            form.showVehicleMenu(index, discount.applyDiscount(v.getBasePrice(), v), v);
+        }
     }
 
     public void freeSpace(int index)
     {
-        if ( model.getVehicle(index) != null )
+        Vehicle vehicle = model.getVehicle(index);
+
+        if ( vehicle != null )
         {
-            //TODO make ticket
+            TicketPrinter.makeTicket(index, vehicle, discount.applyDiscount(vehicle.getBasePrice(), vehicle), discount.toString());
     
             model.removeVehicle(index);
     
@@ -68,6 +69,20 @@ public class Parking
         {
             form.showError("This spot is empty");
         }
+    }
+
+    public boolean applyVehiculeChanges(int index, String type, String plate)
+    {
+        if ( type == null ) form.showError("Please specify a type");
+        else if ( plate.length() != 2 || !Character.isLetter(plate.charAt(0)) || !Character.isDigit(plate.charAt(1)) ) form.showError("Invalid plate");
+        else 
+        {
+            model.replaceVehicle(index, VehicleFactory.build(type, plate));
+            form.showText("Changes applied !");
+            return true;
+        }
+
+        return false;
     }
 
     public void start()

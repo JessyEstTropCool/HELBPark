@@ -6,5 +6,5 @@ public interface IGraphics extends IObserver
 
     void showError(String message);
 
-    void showVehicleMenu(int index, boolean occupied);
+    void showVehicleMenu(int index, double price, Vehicle vehicle);
 }

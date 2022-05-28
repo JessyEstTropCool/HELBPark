@@ -7,4 +7,10 @@ public class FourthOffForPDiscount extends DiscountType
         
         return initialPrice;
     }
+
+    @Override
+    public String toString() 
+    {
+        return "25% off if your plate begins with P";
+    }
 }

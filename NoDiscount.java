@@ -5,4 +5,10 @@ public class NoDiscount extends DiscountType
     {
         return initialPrice;
     }
+
+    @Override
+    public String toString() 
+    {
+        return "No discount";
+    }
 }

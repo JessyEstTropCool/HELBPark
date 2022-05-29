@@ -1,7 +1,9 @@
 public class VehicleFactory 
 {
+    //regroupe toutes les string de type
     public static final String BIKE = "bike", TRUCK = "truck", CAR = "car";
 
+    //génére un vehicule en fonction du type et de la plaque
     public static Vehicle build(String type, String plate)
     {
         switch ( type.toLowerCase() )
@@ -23,6 +25,7 @@ public class VehicleFactory
         }
     }
 
+    //donne un tableau de tous les types existants
     public static String[] getTypes()
     {
         return new String[]{ BIKE, CAR, TRUCK };

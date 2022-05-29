@@ -1,5 +1,7 @@
 public abstract class Vehicle
 {
+    //classe de base pour tous les vehicules
+    
     private String plate;
 
     public Vehicle(String plate)

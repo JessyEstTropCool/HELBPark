@@ -19,6 +19,7 @@ public class Simulator
     private Vehicle car;
     private boolean ok = false;
 
+    //monte le conteur d'une seconde et ajoute une voiture si besoin
     private TimerTask ttask = new TimerTask() {
         @Override
         public void run() 
@@ -36,6 +37,7 @@ public class Simulator
 
                 try
                 {
+                    //si il ya une autre ligne on utilise celle-ci, sinon on arrete la simulation
                     if ( reader.hasNextLine() )
                     {
                         int seconds = getSeconds(totalSecs), minutes = getMinutes(totalSecs);
@@ -62,6 +64,7 @@ public class Simulator
         }
     };
 
+    //singleton pour éviter d'avoir deux simulation en cous au même moment
     public static Simulator getInstance()
     {
         if (instance == null) instance = new Simulator();
@@ -71,6 +74,7 @@ public class Simulator
 
     private Simulator()
     {
+        //lit le fichier et prend la première ligne
         try 
         {
             simfile = new File(FILENAME);
@@ -92,17 +96,20 @@ public class Simulator
         }
     }
 
+    //commence la simulation s'il n'y a pas eu d'erreurs au chargement
     public void startSimulation()
     {
         if ( ok ) timer.scheduleAtFixedRate(ttask, SECOND, SECOND);
         else System.out.println("An error occurred.");
     }
 
+    //spécifie le modèle a qui envoyer les vehicules
     public static void setModel(ParkSpaces spaces)
     {
         model = spaces;
     }
 
+    //arrete la simulation en indiquant le temps de fin
     public void stopSimulation()
     {
         int seconds = getSeconds(totalSecs), minutes = getMinutes(totalSecs);

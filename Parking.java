@@ -13,6 +13,7 @@ public class Parking
         Calendar cal = Calendar.getInstance(Locale.getDefault());
         cal.setTime(new Date(System.currentTimeMillis()));
 
+        //sélectionne le type de réduction en fonction du jour
         switch ( cal.get(Calendar.DAY_OF_WEEK) )
         {
             case Calendar.TUESDAY:
@@ -39,10 +40,13 @@ public class Parking
         this.form = form;
         this.model = new ParkSpaces();
 
+        //indique le nombre de places avant de finir
         form.setCellCount(model.getSpotsCount());
         model.addObserver(form);
     }
 
+    //méthode a appeler quand i-on presse le bouton d'une place
+    //demande l'affichage du menu d'une place
     public void vehicleButtonPressed(int index)
     {
         Vehicle vehicle = model.getVehicle(index);
@@ -53,6 +57,7 @@ public class Parking
         }
     }
 
+    //méthode à appeler quand on veut libérer une place
     public void freeSpace(int index)
     {
         Vehicle vehicle = model.getVehicle(index);
@@ -71,6 +76,8 @@ public class Parking
         }
     }
 
+    //méthode à appeler pour changer le véhicule d'une place
+    //retourne vrai si les changement on été appliqués
     public boolean applyVehiculeChanges(int index, String type, String plate)
     {
         if ( type == null ) form.showError("Please specify a type");
@@ -85,11 +92,13 @@ public class Parking
         return false;
     }
 
+    //méthode à appeler quand l'application est prête; commence la simulation
     public void start()
     {
         model.startSimulation();
     }
 
+    //méthode à appeler quand l'application s'arrete; arrete la simulation
     public void closing()
     {
         model.stopSimulation();

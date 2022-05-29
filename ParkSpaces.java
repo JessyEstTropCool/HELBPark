@@ -26,6 +26,8 @@ public class ParkSpaces
         return null;
     }
 
+    //ajoute un véhicule dans le parking, toujours dans la place la plus petite
+    //si pas de place affiche un message console
     public void addVehicle(Vehicle vehicle) 
     {
         int i = 0;
@@ -47,6 +49,7 @@ public class ParkSpaces
         sendUpdate();
     }
 
+    //remplace un véhicule au cas ou les informations sont erronées
     public void replaceVehicle(int index, Vehicle vehicle)
     {
         spots[index] = vehicle;
@@ -54,6 +57,7 @@ public class ParkSpaces
         sendUpdate();
     }
 
+    //enleve un vehicule a une place donnée
     public void removeVehicle(int index)
     {
         if ( index >= 0 && index < getSpotsCount() )

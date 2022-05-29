@@ -62,6 +62,8 @@ public class HELBPark extends Application implements IGraphics
         launch(args); 
     }  
 
+    //Méthode de démmarage nécessaire à JavaFX
+    //Ajoute aussi le controlleur Parking
     @Override  
     public void start(Stage primaryStage) throws Exception 
     {  
@@ -134,12 +136,14 @@ public class HELBPark extends Application implements IGraphics
         controller.start(); 
     } 
 
+    //appelle la méthode d'arret du controlleur
     @Override
     public void stop()
     {
         controller.closing();
     }
 
+    //méthode de réception de changements du modèles; appelle la mise a jour des boutons
     @Override
     public void update(Object o) 
     {
@@ -150,6 +154,7 @@ public class HELBPark extends Application implements IGraphics
         });
     }
     
+    //Mets les boutons à jour en fonction du modèle donné
     private void updateButtons(ParkSpaces model)
     {
         for ( int compt = 0; compt < model.getSpotsCount(); compt++ )
@@ -157,7 +162,7 @@ public class HELBPark extends Application implements IGraphics
             if ( model.getVehicle(compt) != null )
             {
                 parkButtons[compt].setText(compt+" - "+model.getVehicle(compt).getPlate());
-                BACKGROUNDS.get(model.getVehicle(compt).getType());
+                parkButtons[compt].setBackground(BACKGROUNDS.get(model.getVehicle(compt).getType()));
             }
             else
             {
@@ -167,12 +172,15 @@ public class HELBPark extends Application implements IGraphics
         }
     }
 
+    //indique le nombre de boutons a générer
+    //doit être appelé avant la génération de ceux-ci
     @Override
     public void setCellCount(int i)
     {
         cellCount = i;
     }
 
+    //Affiche du texte sur le label lStatus, pour donner plus d'information
     @Override
     public void showText(String x)
     {
@@ -181,8 +189,9 @@ public class HELBPark extends Application implements IGraphics
         });
     }
 
+    //Affiche une fenêtre séparée avec le menu de place, permettant le changement et la libéation d'une place
     @Override
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked") //doit rester là à cause de la ComboBox qu'on ne peut pas case facilement
     public void showVehicleMenu(int index, double price, Vehicle vehicle) 
     {
         try
@@ -209,16 +218,20 @@ public class HELBPark extends Application implements IGraphics
             lPay.setText("To pay : " + price + " €");
 
             bApply.setOnAction(e -> {
+                //applique le changement de véhicule
+                //ferme la fenetre si le changement est valide
                 if ( controller.applyVehiculeChanges(index, cbType.getValue(), tfPlate.getText()) ) window.close();
             });
 
             bFree.setOnAction(e -> {
+                //libère la place
                 controller.freeSpace(index);
                 window.close();
             });
 
             cbType.getItems().addAll(VehicleFactory.getTypes());
 
+            //met les infos du vehicule s'il y en a un
             if ( vehicle != null )
             {
                 lOccupied.setText("Occupied");
@@ -241,6 +254,7 @@ public class HELBPark extends Application implements IGraphics
         }
     }
 
+    //Affiche une erreur
     @Override
     public void showError(String message)
     {

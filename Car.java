@@ -13,5 +13,4 @@ public class Car extends Vehicle
 
     @Override
     public String getType() { return TYPE_STRING; }
-    public static String getTypeString() { return TYPE_STRING; }
 }

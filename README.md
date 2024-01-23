@@ -1,5 +1,13 @@
 # HELBPark
- Projet de JAVA IV
- Système d'enregistrement de parking avec des trucs très cool comme des réductions et un code en Anglais
+**Programation JAVA IV**
 
- Utilisez le fichier run adapté a votre système d'exploitation, pour démarrer l'application
+Parking management system, made using good practices and applying design patterns
+
+Made using Java and the JavaFX framework
+
+## Exemple image
+
+![Exemple](/Rapport/Interface%20with%20buttons.png)
+ 
+## To run the project
+Use the run file adapted to your operating system
